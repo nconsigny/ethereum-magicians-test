@@ -1,0 +1,13 @@
+{
+  "frame": {
+    "version": "1",
+    "name": "Ethereum Magicians",
+    "iconUrl": "https://ethereum-magicians-test.vercel.app/icon.png",
+    "homeUrl": "https://ethereum-magicians-test.vercel.app/",
+    "imageUrl": "https://ethereum-magicians-test.vercel.app/opengraph-image",
+    "buttonTitle": "View Forum",
+    "splashImageUrl": "https://ethereum-magicians-test.vercel.app/splash.png",
+    "splashBackgroundColor": "#f7f7f7",
+    "webhookUrl": "https://ethereum-magicians-test.vercel.app/api/webhook"
+  }
+}
