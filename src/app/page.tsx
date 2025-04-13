@@ -9,7 +9,7 @@ const buttonText = process.env.NEXT_PUBLIC_FRAME_BUTTON_TEXT || "View Forum";
 const appDescription = process.env.NEXT_PUBLIC_FRAME_DESCRIPTION || "View the Ethereum Magicians forum.";
 
 const splashImageUrl = `${appUrl}/splash.png`;
-const iconUrl = `${appUrl}/icon.png`;
+// const iconUrl = `${appUrl}/icon.png`;
 
 const framePreviewMetadata = {
   version: "next",
