@@ -1,4 +1,9 @@
 {
+  "accountAssociation": {
+    "header": "eyJmaWQiOjEwNDc1NzcsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgzNkU2N0Y3YjM4NzQ0RUE5ZTI0ZDBhNzRkMzBlMDgxZWI5NjViNjBhIn0",
+    "payload": "eyJkb21haW4iOiJldGhlcmV1bS1tYWdpY2lhbnMtdGVzdC52ZXJjZWwuYXBwIn0",
+    "signature": "MHhhNjczNTM4NDUwM2ZkMmI2Y2EyYjYyMzkxYWU3NTU0MmM5YjU1YjRhMTE3ZDFjMDRhM2I0NzAxMWU2OGVhNDdmNmQ2OGY4ZDYyNGIzMTQ0NzIzNjVlZmJkMjQ5NzA3YTM1OTE0MDVlOTMzMWRmMDg4NTM3MGRiNzkxN2Y3ZTNlYzFj"
+  },
   "frame": {
     "version": "1",
     "name": "Ethereum Magicians",
