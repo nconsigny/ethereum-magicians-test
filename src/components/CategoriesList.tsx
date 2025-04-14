@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { sdk } from '@farcaster/frame-sdk'; // Assuming SDK is set up
+import React, { useState, useEffect, useCallback } from 'react';
+import { sdk } from '@farcaster/frame-sdk';
+import LoadingSpinner from './LoadingSpinner';
+import ErrorMessage from './ErrorMessage';
 
-// Interface based on Discourse API for Category
+// Interface for category data from Discourse API
 interface Category {
   id: number;
   name: string;
@@ -14,77 +16,71 @@ interface Category {
   topic_count: number;
   post_count: number;
   position: number;
-  // Add other fields like subcategory_ids if needed
 }
 
+// Expected structure of the /categories.json response
 interface DiscourseCategoriesResponse {
   category_list?: {
     categories: Category[];
   };
 }
 
-// Props if needed later (e.g., for clicking a category)
-// interface CategoriesListProps {
-//   onCategorySelect: (categoryId: number) => void;
-// }
+// Props including the selection callback
+interface CategoriesListProps {
+  onCategorySelect: (categoryId: number, categorySlug: string) => void;
+}
 
-export default function CategoriesList(/*{ onCategorySelect }: CategoriesListProps*/) {
+/**
+ * Component to fetch and display the list of categories from the Discourse forum.
+ */
+export default function CategoriesList({ onCategorySelect }: CategoriesListProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let isMounted = true;
-
-    async function fetchCategories() {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const response = await fetch('/api/discourse/categories.json');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: DiscourseCategoriesResponse = await response.json();
-
-        if (isMounted) {
-          if (data.category_list?.categories) {
-            // Sort categories by position, typically parent categories come first
-            const sortedCategories = data.category_list.categories.sort((a, b) => a.position - b.position);
-            setCategories(sortedCategories);
-            // Call ready() when this view loads
-            // Consider if ready() should be called here or at the page level
-            sdk.actions.ready().catch(console.error);
-          } else {
-            throw new Error('Invalid data structure received from API');
-          }
-        }
-      } catch (err) {
-        console.error('Failed to fetch categories:', err);
-        if (isMounted) {
-             setError(err instanceof Error ? err.message : 'An unknown error occurred');
-        }
-      } finally {
-        if (isMounted) {
-            setIsLoading(false);
-        }
+  // Fetch categories from the backend API proxy
+  const fetchCategories = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('/api/discourse/categories.json');
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.status} ${response.statusText}`);
       }
+      const data: DiscourseCategoriesResponse = await response.json();
+
+      if (data.category_list?.categories) {
+        // Sort categories by position as defined in Discourse admin
+        const sortedCategories = data.category_list.categories.sort((a, b) => a.position - b.position);
+        setCategories(sortedCategories);
+        sdk.actions.ready().catch(console.error);
+      } else {
+        throw new Error('Invalid data structure received from API');
+      }
+    } catch (err) {
+      console.error('Failed to fetch categories:', err);
+      setError(err instanceof Error ? err.message : 'An unknown error occurred fetching categories');
+    } finally {
+      setIsLoading(false);
     }
+  }, []); // Empty dependency array means this fetch function instance is stable
 
+  // Fetch data on initial component mount
+  useEffect(() => {
     fetchCategories();
+  }, [fetchCategories]);
 
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
+  // Render loading state
   if (isLoading) {
-    return <div className="p-6 text-center text-gray-500">Loading categories...</div>;
+    return <LoadingSpinner />;
   }
 
+  // Render error state with retry
   if (error) {
-    return <div className="p-6 text-center text-red-500">Error fetching categories: {error}</div>;
+    return <ErrorMessage message={error} onRetry={fetchCategories} />;
   }
 
+  // Render category list
   return (
     <div className="divide-y divide-gray-200 dark:divide-gray-700">
       {categories.length === 0 ? (
@@ -94,18 +90,19 @@ export default function CategoriesList(/*{ onCategorySelect }: CategoriesListPro
           {categories.map((category) => (
             <li
               key={category.id}
-              // onClick={() => onCategorySelect(category.id)} // Add click handler later if needed
+              onClick={() => onCategorySelect(category.id, category.slug)}
               className="p-4 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors block"
               style={{ borderLeftColor: `#${category.color}`, borderLeftWidth: '3px' }}
+              aria-label={`View category: ${category.name}`}
             >
               <div className="pl-3">
-                  <div className="font-medium text-base mb-1 text-foreground">{category.name}</div>
-                  {category.description && (
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">{category.description}</p>
-                  )}
-                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                    Topics: {category.topic_count} • Posts: {category.post_count}
-                  </div>
+                <div className="font-medium text-base mb-1 text-foreground hover:text-blue-600 dark:hover:text-blue-400">{category.name}</div>
+                {category.description && (
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">{category.description}</p>
+                )}
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                  Topics: {category.topic_count} • Posts: {category.post_count}
+                </div>
               </div>
             </li>
           ))}
