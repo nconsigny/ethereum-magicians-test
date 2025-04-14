@@ -66,23 +66,23 @@ export default function PageClient() {
 
         {/* Header Area - Only show on main views */}
         {currentView !== 'topic' && currentView !== 'categoryDetail' && (
-          <div className="p-4 flex flex-col items-center space-y-3 sticky top-0 bg-sol-base02/90 backdrop-blur-sm z-10 border-b border-sol-base01/50">
+          <div className="py-2 px-4 flex flex-col items-center space-y-2 sticky top-0 bg-sol-base02/90 backdrop-blur-sm z-10 border-b border-sol-base01/50">
              {/* Use the new illustration */}
              <Image 
                src="/what-is-ethereum.b37ce60e.png" // Updated src path
                alt="What is Ethereum illustration"   // Updated alt text
-               width={220} // Adjust width as needed
+               width={80} // Keep size or adjust further?
                height={50} // Adjust height as needed
                priority 
              />
              {/* Navigation Tabs */}
-             <div className="flex border-b border-sol-base01/50 w-full">
+             <div className="flex border-b-0 w-full">
                  <button
                      onClick={() => selectMainView('latest')}
                      className={`flex-1 py-2 px-4 text-center text-sm font-medium transition-colors duration-150 ${ 
                       currentView === 'latest' 
                       ? 'border-b-2 border-sol-violet text-sol-violet'
-                      : 'text-sol-base0 hover:bg-sol-base03/50 hover:text-sol-violet'
+                      : 'text-sol-base0 hover:bg-sol-base03/50 hover:text-sol-violet border-b-2 border-transparent'
                      }`}
                  >
                      Latest
@@ -92,7 +92,7 @@ export default function PageClient() {
                      className={`flex-1 py-2 px-4 text-center text-sm font-medium transition-colors duration-150 ${ 
                       currentView === 'categories' 
                       ? 'border-b-2 border-sol-violet text-sol-violet'
-                      : 'text-sol-base0 hover:bg-sol-base03/50 hover:text-sol-violet'
+                      : 'text-sol-base0 hover:bg-sol-base03/50 hover:text-sol-violet border-b-2 border-transparent'
                      }`}
                  >
                      Categories

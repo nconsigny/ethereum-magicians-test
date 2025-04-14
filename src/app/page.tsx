@@ -15,11 +15,11 @@ const buttonText = process.env.NEXT_PUBLIC_FRAME_BUTTON_TEXT || "View Forum";
 const appDescription = process.env.NEXT_PUBLIC_FRAME_DESCRIPTION || "View the Ethereum Magicians forum.";
 const splashImageUrl = `${appUrl}/splash.png`;
 const desiredImageUrl = `${appUrl}/eth.28aff33d.png`;
-const desiredImageRelativePath = "/eth.28aff33d.png";
+// const desiredImageRelativePath = "/eth.28aff33d.png"; // No longer needed
 
 const framePreviewMetadata = {
   version: "next",
-  imageUrl: desiredImageRelativePath,
+  imageUrl: desiredImageUrl,
   button: {
     title: buttonText,
     action: {
