@@ -1,10 +1,12 @@
 'use client'; // This component handles state and interactivity
 
 import React, { useState } from 'react';
+import Image from 'next/image'; // Import next/image
 import LatestTopics from "../components/LatestTopics";
 import TopicDetail from "../components/TopicDetail";
 import CategoriesList from "../components/CategoriesList";
 import CategoryTopicList from '../components/CategoryTopicList';
+import { sdk } from '@farcaster/frame-sdk'; // Ensure sdk is imported if needed
 
 // Type for the different views
 type View = 'latest' | 'topic' | 'categories' | 'categoryDetail';
@@ -17,6 +19,11 @@ export default function PageClient() {
   const [selectedTopicId, setSelectedTopicId] = useState<number | null>(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
   const [selectedCategorySlug, setSelectedCategorySlug] = useState<string | null>(null);
+
+  // Tell Farcaster client the app is ready
+  React.useEffect(() => {
+      sdk.actions.ready().catch(console.error);
+  }, []);
 
   // Navigate to Topic Detail View
   const handleTopicSelect = (topicId: number) => {
@@ -54,35 +61,48 @@ export default function PageClient() {
   };
 
   return (
-     <main className="bg-background text-foreground min-h-screen font-sans">
-       {/* Sticky Header/Nav - Hide if viewing a topic or category detail */}
-       {currentView !== 'topic' && currentView !== 'categoryDetail' && (
-            <div className="flex border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-background/95 backdrop-blur-sm z-10">
-                <button
-                    onClick={() => selectMainView('latest')}
-                    className={`flex-1 py-3 px-4 text-center text-sm font-medium transition-colors duration-150 ${ 
-                     currentView === 'latest' 
-                     ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400' 
-                     : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-200'
-                    }`}
-                >
-                    Latest
-                </button>
-                <button
-                    onClick={() => selectMainView('categories')}
-                    className={`flex-1 py-3 px-4 text-center text-sm font-medium transition-colors duration-150 ${ 
-                     currentView === 'categories' 
-                     ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400' 
-                     : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-200'
-                    }`}
-                >
-                    Categories
-                </button>
-            </div>
-       )}
+    // Use sol-base02 for the main background for slightly less dark contrast?
+     <main className="bg-sol-base02 text-sol-violet min-h-screen font-sans">
+
+        {/* Header Area - Only show on main views */}
+        {currentView !== 'topic' && currentView !== 'categoryDetail' && (
+          <div className="p-4 flex flex-col items-center space-y-3 sticky top-0 bg-sol-base02/90 backdrop-blur-sm z-10 border-b border-sol-base01/50">
+             {/* Use the new illustration */}
+             <Image 
+               src="/what-is-ethereum.b37ce60e.png" // Updated src path
+               alt="What is Ethereum illustration"   // Updated alt text
+               width={300} // Adjust width as needed
+               height={50} // Adjust height as needed
+               priority 
+             />
+             {/* Navigation Tabs */}
+             <div className="flex border-b border-sol-base01/50 w-full">
+                 <button
+                     onClick={() => selectMainView('latest')}
+                     className={`flex-1 py-2 px-4 text-center text-sm font-medium transition-colors duration-150 ${ 
+                      currentView === 'latest' 
+                      ? 'border-b-2 border-sol-violet text-sol-violet'
+                      : 'text-sol-base0 hover:bg-sol-base03/50 hover:text-sol-violet'
+                     }`}
+                 >
+                     Latest
+                 </button>
+                 <button
+                     onClick={() => selectMainView('categories')}
+                     className={`flex-1 py-2 px-4 text-center text-sm font-medium transition-colors duration-150 ${ 
+                      currentView === 'categories' 
+                      ? 'border-b-2 border-sol-violet text-sol-violet'
+                      : 'text-sol-base0 hover:bg-sol-base03/50 hover:text-sol-violet'
+                     }`}
+                 >
+                     Categories
+                 </button>
+             </div>
+          </div>
+        )}
  
-       {/* Main Content Area - Components handle their own padding */}
-       <div className="mx-auto"> 
+        {/* Main Content Area */}
+       <div className="mx-auto">
           {currentView === 'latest' && (
             <LatestTopics onTopicSelect={handleTopicSelect} />
           )}

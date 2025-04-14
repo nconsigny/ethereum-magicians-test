@@ -83,20 +83,20 @@ export default function LatestTopics({ onTopicSelect }: LatestTopicsProps) {
 
   // Render topic list
   return (
-    <div className="divide-y divide-gray-200 dark:divide-gray-700">
+    <div className="divide-y divide-sol-base01/50">
       {topics.length === 0 ? (
-        <p className="p-6 text-center text-gray-500">No topics found.</p>
+        <p className="p-6 text-center text-sol-base0">No topics found.</p>
       ) : (
         <ul className="list-none p-0 m-0">
           {topics.map((topic) => (
             <li
               key={topic.id}
               onClick={() => onTopicSelect(topic.id)}
-              className="p-4 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors block"
+              className="p-4 hover:bg-sol-base02 cursor-pointer transition-colors block"
               aria-label={`View topic: ${topic.title}`}
             >
-              <span className="font-medium text-base block mb-1 text-foreground hover:text-blue-600 dark:hover:text-blue-400">{topic.title}</span>
-              <span className="text-xs text-gray-500 dark:text-gray-400 block">
+              <span className="font-medium text-base block mb-1 hover:text-sol-violet">{topic.title}</span>
+              <span className="text-xs text-sol-base00 block">
                 Replies: {topic.reply_count} • Last Post: {new Date(topic.last_posted_at).toLocaleDateString()}
               </span>
             </li>

@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-sol-base03 text-sol-base0 min-h-screen;
+    @apply bg-sol-base03 text-sol-violet min-h-screen;
     font-family: 'Inter', Helvetica, Arial, sans-serif;
   }
   :root {

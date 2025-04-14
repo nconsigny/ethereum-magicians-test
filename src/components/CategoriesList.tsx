@@ -82,25 +82,25 @@ export default function CategoriesList({ onCategorySelect }: CategoriesListProps
 
   // Render category list
   return (
-    <div className="divide-y divide-gray-200 dark:divide-gray-700">
+    <div className="divide-y divide-sol-base01/50">
       {categories.length === 0 ? (
-        <p className="p-6 text-center text-gray-500">No categories found.</p>
+        <p className="p-6 text-center text-sol-base0">No categories found.</p>
       ) : (
         <ul className="list-none p-0 m-0">
           {categories.map((category) => (
             <li
               key={category.id}
               onClick={() => onCategorySelect(category.id, category.slug)}
-              className="p-4 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors block"
+              className="p-4 hover:bg-sol-base02 cursor-pointer transition-colors block"
               style={{ borderLeftColor: `#${category.color}`, borderLeftWidth: '3px' }}
               aria-label={`View category: ${category.name}`}
             >
               <div className="pl-3">
-                <div className="font-medium text-base mb-1 text-foreground hover:text-blue-600 dark:hover:text-blue-400">{category.name}</div>
+                <div className="font-medium text-base mb-1 hover:text-sol-violet">{category.name}</div>
                 {category.description && (
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">{category.description}</p>
+                  <p className="text-sm text-sol-base0 mt-1 line-clamp-2">{category.description}</p>
                 )}
-                <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                <div className="text-xs text-sol-base00 mt-2">
                   Topics: {category.topic_count} • Posts: {category.post_count}
                 </div>
               </div>

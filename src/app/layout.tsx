@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { getSession } from "~/auth"
-import "~/app/globals.css";
-import { Providers } from "~/app/providers";
-import { cn } from "~/lib/utils";
+import { getSession } from "../auth";
+import "./globals.css";
+import { Providers } from "./providers";
+import { cn } from "../lib/utils";
 
 // If using next/font
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -21,7 +21,7 @@ export default async function RootLayout({
   const session = await getSession()
 
   return (
-    <html lang="en" className={cn("dark", inter.variable)} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} dark font-sans`} suppressHydrationWarning>
       <body>
         <Providers session={session}>{children}</Providers>
       </body>
