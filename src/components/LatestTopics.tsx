@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { sdk } from '@farcaster/frame-sdk';
 import LoadingSpinner from './LoadingSpinner';
 import ErrorMessage from './ErrorMessage';

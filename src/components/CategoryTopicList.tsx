@@ -48,10 +48,8 @@ export default function CategoryTopicList({
   const [topics, setTopics] = useState<Topic[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  // Attempt to format slug nicely for display, fallback to raw slug
-  const [categoryName, setCategoryName] = useState<string>(() => 
-     categorySlug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Category'
-  );
+  // Derive the category name directly, no need for state setter if not updating later
+  const categoryName = categorySlug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Category';
 
   // Fetch topics for the selected category
   const fetchCategoryTopics = useCallback(async () => {
