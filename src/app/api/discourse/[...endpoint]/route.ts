@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 const DISCOURSE_URL = process.env.DISCOURSE_BASE_URL;
 const API_KEY = process.env.DISCOURSE_API_KEY;
@@ -12,7 +12,7 @@ type RouteContext = {
 };
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   context: RouteContext // Use the defined type here
 ) {
   if (!DISCOURSE_URL || !API_KEY) {
