@@ -14,10 +14,12 @@ const appName = process.env.NEXT_PUBLIC_FRAME_NAME || "Ethereum Magicians";
 const buttonText = process.env.NEXT_PUBLIC_FRAME_BUTTON_TEXT || "View Forum";
 const appDescription = process.env.NEXT_PUBLIC_FRAME_DESCRIPTION || "View the Ethereum Magicians forum.";
 const splashImageUrl = `${appUrl}/splash.png`;
+const desiredImageUrl = `${appUrl}/eth.28aff33d.png`;
+const desiredImageRelativePath = "/eth.28aff33d.png";
 
 const framePreviewMetadata = {
   version: "next",
-  imageUrl: `${appUrl}/opengraph-image`,
+  imageUrl: desiredImageRelativePath,
   button: {
     title: buttonText,
     action: {
@@ -25,7 +27,7 @@ const framePreviewMetadata = {
       name: appName,
       url: appUrl,
       splashImageUrl,
-      splashBackgroundColor: "#f7f7f7",
+      splashBackgroundColor: "#002b36",
     },
   },
 };
@@ -41,6 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: appName,
       description: appDescription,
+      images: [{ url: desiredImageUrl }],
     },
     other: {
       "fc:frame": JSON.stringify(framePreviewMetadata),
