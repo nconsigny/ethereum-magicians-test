@@ -71,7 +71,7 @@ export default function PageClient() {
              <Image 
                src="/what-is-ethereum.b37ce60e.png" // Updated src path
                alt="What is Ethereum illustration"   // Updated alt text
-               width={80} // Keep size or adjust further?
+               width={180} // Keep size or adjust further?
                height={50} // Adjust height as needed
                priority 
              />
