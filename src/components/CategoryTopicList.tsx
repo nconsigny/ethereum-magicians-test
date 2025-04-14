@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { sdk } from '@farcaster/frame-sdk';
 import LoadingSpinner from './LoadingSpinner';
 import ErrorMessage from './ErrorMessage';
+import { BackButton } from './BackButton';
 
 // Re-export or define Topic interface if not shared
 interface Topic {
@@ -95,13 +96,7 @@ export default function CategoryTopicList({
   if (error) {
     return (
       <div className="p-4">
-        <button onClick={onBack} className="mb-4 text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center group" aria-label="Back to Categories">
-          {/* Back arrow SVG */}
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 transition-transform duration-150 group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          Back to Categories
-        </button>
+        <BackButton onClick={onBack} text="Back to Categories" className="mb-4" />
         <ErrorMessage message={error} onRetry={fetchCategoryTopics} />
       </div>
     );
@@ -110,13 +105,7 @@ export default function CategoryTopicList({
   // Render topic list for the category
   return (
     <div className="p-4">
-      <button onClick={onBack} className="mb-4 text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center group" aria-label="Back to Categories">
-         {/* Back arrow SVG */}
-         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 transition-transform duration-150 group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-         Back to Categories
-      </button>
+      <BackButton onClick={onBack} text="Back to Categories" className="mb-4" />
       <h2 className="text-xl font-semibold mb-5 text-foreground">Topics in: {categoryName}</h2>
 
       <div className="divide-y divide-gray-200 dark:divide-gray-700">

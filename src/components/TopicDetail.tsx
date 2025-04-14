@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { sdk } from '@farcaster/frame-sdk';
 import LoadingSpinner from './LoadingSpinner';
 import ErrorMessage from './ErrorMessage';
+import { BackButton } from './BackButton';
 
 // Interface for individual post data
 interface Post {
@@ -76,13 +77,7 @@ export default function TopicDetail({ topicId, onBack }: TopicDetailProps) {
   if (error) {
     return (
       <div className="p-4">
-        <button onClick={onBack} className="mb-4 text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center group" aria-label="Go back">
-          {/* Back arrow SVG */}
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 transition-transform duration-150 group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          Back
-        </button>
+        <BackButton onClick={onBack} className="mb-4" />
         <ErrorMessage message={error} onRetry={fetchTopicDetail} />
       </div>
     );
@@ -92,13 +87,7 @@ export default function TopicDetail({ topicId, onBack }: TopicDetailProps) {
   if (!topic) {
     return (
       <div className="p-4">
-        <button onClick={onBack} className="mb-4 text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center group" aria-label="Go back">
-          {/* Back arrow SVG */}
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 transition-transform duration-150 group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          Back
-        </button>
+        <BackButton onClick={onBack} className="mb-4" />
         <ErrorMessage message="Topic data could not be loaded." />
       </div>
     );
@@ -107,17 +96,7 @@ export default function TopicDetail({ topicId, onBack }: TopicDetailProps) {
   // Render the topic details and posts
   return (
     <div className="p-4">
-      <button
-        onClick={onBack}
-        className="mb-4 text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center group"
-        aria-label="Go back"
-      >
-        {/* Back arrow SVG */}
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 transition-transform duration-150 group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-        Back
-      </button>
+      <BackButton onClick={onBack} className="mb-4" />
       <h1 className="text-xl font-semibold mb-5 text-foreground">{topic.title}</h1>
       <div className="space-y-5">
         {posts.map((post, index) => (
