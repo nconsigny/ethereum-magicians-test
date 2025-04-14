@@ -4,16 +4,9 @@ const DISCOURSE_URL = process.env.DISCOURSE_BASE_URL;
 const API_KEY = process.env.DISCOURSE_API_KEY;
 const API_USERNAME = process.env.DISCOURSE_API_USERNAME || 'system'; // Default to system if not set
 
-// Define the type for the route context parameters
-type RouteContext = {
-  params: {
-    endpoint: string[];
-  };
-};
-
 export async function GET(
   request: NextRequest,
-  context: RouteContext // Use the defined type here
+  { params }: { params: { endpoint: string[] } }
 ) {
   if (!DISCOURSE_URL || !API_KEY) {
     return NextResponse.json(
@@ -22,8 +15,6 @@ export async function GET(
     );
   }
 
-  // Destructure params inside the function
-  const { params } = context;
   const endpointPath = params.endpoint.join('/');
   const { searchParams } = new URL(request.url);
 
